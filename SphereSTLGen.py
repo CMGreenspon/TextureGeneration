@@ -84,7 +84,7 @@ for m in range (0,m_nu):
         phi = 2*np.pi*n/m_phi # Longitude
         nu_phi[count,:] = [nu,phi]
         count = count +1
-        if count == n_features: # Due to rounding errors sometimes there is an extra feature
+        if count == n_features: # Due to rounding errors sometimes there is an extra point
             break
 
 points = NuPhi2xyz(nu_phi,r)
@@ -124,29 +124,15 @@ pcd = o3d.geometry.PointCloud()
 pcd.points = o3d.utility.Vector3dVector(points)  
 o3d.geometry.PointCloud.estimate_normals(pcd)
 o3d.geometry.PointCloud.orient_normals_consistent_tangent_plane(pcd, 1)
+o3d.visualization.draw_geometries([pcd])
 
-# Poisson mesh
+
+#%%  Poisson mesh
 poisson_mesh = o3d.geometry.TriangleMesh.create_from_point_cloud_poisson(pcd, depth=8, width=0, scale=1.5, linear_fit=False)[0]
 o3d.geometry.TriangleMesh.compute_triangle_normals(poisson_mesh)
+o3d.visualization.draw_geometries([poisson_mesh])
 
 o3d.io.write_triangle_mesh(path + '\poiss.stl', poisson_mesh)
 
+
 #%%
-from stl import mesh
-data = np.zeros(n_features, dtype=mesh.Mesh.dtype)
-your_mesh = mesh.Mesh(data, remove_empty_areas=False)
-your_mesh.normals
-#%%
-'''
-import open3d as o3d
-
-pcd = o3d.geometry.PointCloud()
-pcd.points = o3d.utility.Vector3dVector(points)    
-
-poisson_mesh = o3d.geometry.TriangleMesh.create_from_point_cloud_poisson(pcd, depth=8, width=0, scale=1.1, linear_fit=False)[0]
-o3d.io.write_triangle_mesh(path, poisson_mesh)
-
-
-# Save points as csv? Load csv as pcd
-# http://www.open3d.org/docs/latest/tutorial/Basic/mesh.html
-'''
