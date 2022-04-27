@@ -5,7 +5,7 @@ Texture Generation Script
 import os
 import numpy as np
 from scipy.spatial import Delaunay
-from stl import mesh
+from stl import mesh # requires numpy-stl
 from copy import deepcopy
 
 #%% Function inputs
@@ -13,10 +13,10 @@ from copy import deepcopy
 output_dir = r'C:\Users\somlab\Desktop'
 output_mode = 'csv' # csv or stl
 feature = 'sine_wave' # cone, sine_wave, square_wave, dot
-area = (32, 18) # Size in millimeters
+area = (20, 20) # Size in millimeters
 height = 1 # Size of bumps or ridges above the base or the amplitude of a sine wave
 width = 1.5 # Width of the bumps or ridges (no effect for sine wave or dot)
-periodicity = 3 # Spacing between ridges or features. If sine wave this is the 1/frequency.
+periodicity = 4 # Spacing between ridges or features. If sine wave this is the 1/frequency.
  
 # Optional inputs
 trunc = False
