@@ -13,13 +13,13 @@ from copy import deepcopy
 output_dir = r'C:\Users\somlab\Desktop'
 output_mode = 'csv' # csv or stl
 feature = 'sine_wave' # cone, sine_wave, square_wave, dot
-area = (20, 20) # Size in millimeters
+area = (45,23) # Size in millimeters (scanning direction, width)
 height = 1 # Size of bumps or ridges above the base or the amplitude of a sine wave
 width = 1.5 # Width of the bumps or ridges (no effect for sine wave or dot)
-periodicity = 4 # Spacing between ridges or features. If sine wave this is the 1/frequency.
+periodicity = 5 # Spacing between ridges or features. If sine wave this is the 1/frequency.
  
 # Optional inputs
-trunc = False
+trunc = .5
 '''If not False then the truncation parameter for the feature.
    Cones or dots: this is the maximum diameter (mm)
    Sine_wave: this can only be true and if so removes all negative values
