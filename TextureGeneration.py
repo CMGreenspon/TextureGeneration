@@ -12,11 +12,11 @@ from copy import deepcopy
 # Required inputs
 output_dir = r'C:\Users\somlab\Desktop'
 output_mode = 'csv' # csv or stl
-feature = 'sine_wave' # cone, sine_wave, square_wave, dot
+feature = 'dot' # cone, sine_wave, square_wave, dot
 area = (45,23) # Size in millimeters (scanning direction, width)
 height = 1 # Size of bumps or ridges above the base or the amplitude of a sine wave
 width = 1.5 # Width of the bumps or ridges (no effect for sine wave or dot)
-periodicity = 5 # Spacing between ridges or features. If sine wave this is the 1/frequency.
+periodicity = 3 # Spacing between ridges or features. If sine wave this is the 1/frequency.
  
 # Optional inputs
 trunc = .5
@@ -66,6 +66,11 @@ if not marker_ratio == 'auto':
     
     if not len(marker_ratio) == 2:
         raise ValueError('Marker ratio must be a float or tuple/list of.') 
+        
+if feature == 'cone' or feature == 'dot':
+    if periodicity <= width:
+        raise ValueError('Dots and cones: the periodicity (spacing between features) ',
+                         'must be greater than the feature width.') 
 
 #%% Output function
 def output_mesh(faces, vertices, file_path):
